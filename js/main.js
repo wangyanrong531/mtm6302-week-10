@@ -48,3 +48,37 @@ const cats = [
     img: "images/kitten8.jpeg"
   }
 ]
+
+
+const catsRow = document.getElementById('catsRow')
+// loop over the array of data
+for(const cat of cats){
+  console.log(cat.name)
+  const card =`
+  <div class="col">
+  <div class="card">
+    <img data-bs-toggle="modal" data-bs-target="#exampleModal"src="${cat.thumb}" data-fullimg="${cat.img}" class="card-img-top" alt="placeholder kitten">
+    <div class="card-body">
+      <h5 class="card-title">${cat.name}</h5>
+      <p class="card-text">${cat.bio}</p>
+      <a href="#" class="btn btn-light">Like</a>
+    </div>
+  </div>    
+  <!-- col ends -->`
+
+  //add the card to the cats row
+  catsRow.insertAdjacentHTML("beforeend",card)
+}
+
+//adding event listerner to the row
+catsRow.addEventListener("click", openModal)
+
+function openModal(e){
+  //delegate the event to the target element if it contains class card-img-top
+  if(e.target.classList.contains("card-img-top")){
+    const fullSizeImage=e.target.dataset.fullimg //event.target
+    document.querySelector(".modal-body").innerHTML = `<img src="${fullSizeImage}"
+    alt="placeholder kitten">
+    `
+  }
+}
